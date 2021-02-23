@@ -2,13 +2,14 @@ import axios from 'axios'
 
 const instance = axios.create({
     baseURL: 'https://cors-anywhere.herokuapp.com/https://www.mrsoft.by/data.json',
+    withCredentials: true
 })
 
 //Использовал https://cors-anywhere.herokuapp.com/ чтобы обойти политику безопасности CORS, т.к я не могу слать запрос с другого домена
 // если сервер не предоставил такую возможность
 
 type ResponseType = {
-    data:string[]
+    data: string[]
 }
 
 export const api = () => {
