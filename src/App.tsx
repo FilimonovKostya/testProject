@@ -12,7 +12,7 @@ function App() {
     let [filterWords, setFilterWord] = useState<string[]>([])
     const [inputText, setInputText] = useState<string>('')
     const [isRegister, setIsRegister] = useState<boolean>(false)
-    const [isLoadingData, setIsLoadingData] = useState<boolean>(false)
+    const [showProgressBar, setShowProgressBar] = useState<boolean>(false)
 
     const onChangeInputValue = useCallback((event: ChangeEvent<HTMLInputElement>) => setInputText(event.currentTarget.value), [])
     const onChangeHandler = useCallback((event: ChangeEvent<HTMLInputElement>) => setIsRegister(event.currentTarget.checked), [])
@@ -24,11 +24,11 @@ function App() {
     }, [data, inputText, isRegister])
 
     useEffect(() => {
-        setIsLoadingData(true)
+        setShowProgressBar(true)
         api()
             .then(res => {
                 setData(res.data.data)
-                setIsLoadingData(false)
+                setShowProgressBar(false)
             })
             .catch(() => {
                 alert('Something wrong')
@@ -36,7 +36,7 @@ function App() {
     }, [])
 
     return <div className={'wrapper'}>
-        {isLoadingData ? <ProgressBar/> : null}
+        {showProgressBar ? <ProgressBar/> : null}
         <div className={'container'}>
             <Input inputText={inputText} onChangeInputValue={onChangeInputValue}/>
             <CheckBox checked={isRegister} onChange={onChangeHandler}/>
